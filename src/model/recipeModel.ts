@@ -20,14 +20,14 @@ import BaseModel from "./baseModel";
 
 export default class RecipeModel extends BaseModel {
   static async getAll() {
-    const query = this.queryBuilder()
+    return this.queryBuilder()
       .select({
         id: "id",
         title: "title",
         description: "description",
         ingredients: "ingredients",
         instructions: "instructions",
-        photo: "string",
+        photo: "photo",
         createdAt: "created_at",
       })
       .table("recipes");

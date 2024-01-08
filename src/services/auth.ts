@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid"; // Import uuid library
 import { ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_EXPIRY } from "../constant/jwt";
 import config from "../config";
+import UserModel from "../model/users";
 
 export const register = async (
   firstname: string,
@@ -11,22 +12,25 @@ export const register = async (
   email: string,
   password: string
 ) => {
+  console.log({ email });
+  const emailUser = await UserModel.getByEmail(email);
+  console.log({ emailUser });
+  if (emailUser) return null;
   const hashedpass = await bcrypt.hash(password, 10);
-  const user = {
-    id: uuidv4(), // Generate UUID for id
+  const user = await UserModel.create({
     firstname,
     lastname,
     email,
     password: hashedpass,
-  };
-  users.push(user);
+
+    // id: uuidv4(),
+  });
+
   return user;
 };
 
 export const login = async (email: string, password: string) => {
-  const user = users.find((user) => {
-    return user.email === email;
-  });
+  const user = await UserModel.getByEmail(email);
 
   if (!user) return null;
 
@@ -46,6 +50,5 @@ export const login = async (email: string, password: string) => {
   return {
     accessToken,
     refreshToken,
-    user,
   };
 };
