@@ -1,7 +1,9 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from "dotenv";
+const pathToEnv = __dirname + "/../.env";
 
-const config = {
+config({ path: pathToEnv });
+
+const serverConfig = {
   serverPort: process.env.SERVER_PORT || 8000,
 
   jwt: {
@@ -20,4 +22,4 @@ const config = {
     user: process.env.DB_USER,
   },
 };
-export default config;
+export default serverConfig;

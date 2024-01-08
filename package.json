@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "make:migration": "knex --knexfile=src/knexFile.ts migrate:make ",
+    "migrate": "knex --knexfile=src/knexFile.ts migrate:latest --verbose",
+    "rollback": "knex --knexfile=src/knexFile.ts migrate:rollback --verbose",
+    "seed": "knex --knexfile=src/knexFile.ts seed:run --verbose",
+    "make:seeder": "knex --knexfile=src/knexFile.ts seed:make "
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +37,7 @@
     "knex": "^3.1.0",
     "nodemon": "^3.0.2",
     "pg": "^8.11.3",
+    "sqlite3": "^5.1.7",
     "to-snake-case": "^1.0.0",
     "uuid": "^9.0.1",
     "winston": "^3.11.0"

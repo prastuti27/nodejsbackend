@@ -11,8 +11,12 @@ export const getRecipeById = async (id: number) => {
   return data;
 };
 
-export const createRecipe = async (body: any) => {
-  await RecipeModel.create(body);
+export const createRecipe = async (data: any) => {
+  const recipeData = {
+    ...data,
+    ingredients: JSON.stringify(data.ingredients),
+  };
+  await RecipeModel.create(recipeData);
 };
 
 export const updateRecipe = async (id: number, body: any) => {

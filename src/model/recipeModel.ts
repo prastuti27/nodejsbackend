@@ -5,7 +5,7 @@
 //     description:string;
 //     ingredients: Ingredient[];
 //     steps: string[];
-//     created_at?: Date;
+//     created_at: Date;
 //     updated_at?: Date;
 //   }
 
@@ -28,7 +28,7 @@ export default class RecipeModel extends BaseModel {
         ingredients: "ingredients",
         instructions: "instructions",
         photo: "string",
-        createdAt: "createdAt",
+        createdAt: "created_at",
       })
       .table("recipes");
   }
