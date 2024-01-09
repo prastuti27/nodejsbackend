@@ -29,7 +29,8 @@ export const createRecipeController = async (
   next: NextFunction
 ) => {
   try {
-    const recipeId = await createRecipe(req.body);
+    const { categories, ...recipeDetails } = req.body;
+    const recipeId = await createRecipe(recipeDetails, categories);
     res.status(201).json({ recipeId });
   } catch (error) {
     next(error);

@@ -49,10 +49,11 @@ export default class RecipeModel extends BaseModel {
   }
 
   static async create(recipe: any) {
-    return this.queryBuilder().insert(recipe).table("recipes");
+    return this.queryBuilder().returning("id").insert(recipe).table("recipes");
   }
 
   static async update(id: number, recipe: any) {
+    recipe.updated_at = this.queryBuilder().fn.now();
     return this.queryBuilder().update(recipe).table("recipes").where({ id });
   }
 
