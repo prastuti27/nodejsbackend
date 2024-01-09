@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import users from "../model/users";
 import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from "uuid"; // Import uuid library
+// import { v4 as uuidv4 } from "uuid";
 import { ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_EXPIRY } from "../constant/jwt";
 import config from "../config";
 import UserModel from "../model/users";
