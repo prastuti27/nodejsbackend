@@ -2,6 +2,10 @@ import RecipeModel from "../model/recipeModel";
 import NotFoundError from "../error/notFoundError";
 import RecipeCategoryModel from "../model/RecipeCategoryModel";
 import categoryModel from "../model/categoryModel";
+import {
+  createRecipePayloadInterface,
+  updateRecipePayloadInterface,
+} from "../interface/recipe";
 
 export const getRecipeById = async (id: number) => {
   const data = await RecipeModel.getById(id);
@@ -15,7 +19,10 @@ export const getRecipeById = async (id: number) => {
   return data;
 };
 
-export const createRecipe = async (data: any, categories: string[]) => {
+export const createRecipe = async (
+  data: createRecipePayloadInterface,
+  categories: string[]
+) => {
   const recipeData = {
     ...data,
     ingredients: JSON.stringify(data.ingredients),
@@ -28,7 +35,10 @@ export const createRecipe = async (data: any, categories: string[]) => {
   });
 };
 
-export const updateRecipe = async (id: number, body: any) => {
+export const updateRecipe = async (
+  id: number,
+  body: updateRecipePayloadInterface
+) => {
   const recipe = await RecipeModel.getById(id);
 
   if (!recipe) {

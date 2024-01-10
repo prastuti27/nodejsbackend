@@ -16,6 +16,7 @@
 
 // recipeModel.ts
 
+import { updateRecipePayloadInterface } from "../interface/recipe";
 import BaseModel from "./baseModel";
 
 export default class RecipeModel extends BaseModel {
@@ -52,8 +53,10 @@ export default class RecipeModel extends BaseModel {
     return this.queryBuilder().returning("id").insert(recipe).table("recipes");
   }
 
-  static async update(id: number, recipe: any) {
-    recipe.updated_at = this.queryBuilder().fn.now();
+  static async update(id: number, recipe: updateRecipePayloadInterface) {
+    const currentDateTime = new Date();
+    recipe.updatedAt = currentDateTime;
+
     return this.queryBuilder().update(recipe).table("recipes").where({ id });
   }
 

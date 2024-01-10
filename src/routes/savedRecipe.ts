@@ -1,29 +1,30 @@
 import { Router } from "express";
+import {
+  getAllSavedRecipesController,
+  saveRecipeController,
+  unsaveRecipeController,
+} from "../controller/saveRecipe"; // Assuming the controller file for saved recipes is savedRecipes.ts
+import { genericErrorHandler } from "../middleware/errorHandler";
+import { authMiddleware } from "../middleware/authMiddleware";
 
-// import {
-//   createRecipeController,
-//   getRecipeByIdController,
-//   getAllRecipesController,
-//   updateRecipeController,
-//   deleteRecipeController,
-// } from "../controller/recipes";
-// import { genericErrorHandler } from "../middleware/errorHandler";
+const savedRecipesRouter = Router();
 
-// const router = Router();
-
-// router.post("/recipes", createRecipeController);
-// router.get("/recipes/:recipeId", getRecipeByIdController);
-// router.get("/recipes", getAllRecipesController);
-
-// router.delete("/recipes/:recipeId", deleteRecipeController);
-// router.use(genericErrorHandler);
-
-// export default router;
-const router = Router();
-router.post("save-recipes", createSaveRecipeController);
-router.delete(
-  "/delete-recipe/:userId/:recipeId",
-  savedRecipesController.deleteSavedRecipe
+savedRecipesRouter.get(
+  "/saved-recipes",
+  authMiddleware,
+  getAllSavedRecipesController
 );
-router.get("save-recipes", createSaveRecipeController);
-router.get("save-recipes", createSaveRecipeController);
+
+savedRecipesRouter.post(
+  "/saved-recipes/:recipeId/save",
+  authMiddleware,
+  saveRecipeController
+);
+savedRecipesRouter.delete(
+  "/saved-recipes/:recipeId/unsave",
+  authMiddleware,
+  unsaveRecipeController
+);
+savedRecipesRouter.use(genericErrorHandler);
+
+export default savedRecipesRouter;

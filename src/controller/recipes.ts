@@ -30,6 +30,7 @@ export const createRecipeController = async (
 ) => {
   try {
     const { categories, ...recipeDetails } = req.body;
+
     const recipeId = await createRecipe(recipeDetails, categories);
     res.status(201).json({ recipeId });
   } catch (error) {
