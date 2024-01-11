@@ -19,7 +19,6 @@ export const getAllSavedRecipesController = async (
   try {
     const userId = req.user?.id;
     if (!userId) {
-      // Handle the case where user information is not available
       return res.status(401).json({ message: "Unauthorized" });
     }
 

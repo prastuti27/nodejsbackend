@@ -31,6 +31,9 @@ export const register = async (
 
 export const login = async (email: string, password: string) => {
   const user = await UserModel.getByEmail(email);
+  const userDetail = {
+    fullname: user.fullname,
+  };
 
   if (!user) return null;
 
@@ -50,5 +53,6 @@ export const login = async (email: string, password: string) => {
   return {
     accessToken,
     refreshToken,
+    fullname: user.firstname,
   };
 };
