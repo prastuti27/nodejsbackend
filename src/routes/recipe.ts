@@ -8,14 +8,15 @@ import {
   deleteRecipeController,
 } from "../controller/recipes";
 import { genericErrorHandler } from "../middleware/errorHandler";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const router = Router();
 
-router.post("/recipes", createRecipeController);
+router.post("/recipes",authMiddleware,createRecipeController);
 router.get("/recipes/:recipeId", getRecipeByIdController);
-router.get("/recipes", getAllRecipesController);
+router.get("/recipes", authMiddleware,getAllRecipesController);
 router.put("/recipes/:recipeId", updateRecipeController);
 router.delete("/recipes/:recipeId", deleteRecipeController);
-router.use(genericErrorHandler);
+router.use(genericErrorHandler );
 
 export default router;

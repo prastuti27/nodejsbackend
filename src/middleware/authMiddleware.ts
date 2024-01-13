@@ -14,9 +14,18 @@ export const authMiddleware = async (
     res.status(401).json({ message: "Token not Found" });
   }
 
-  const decode = jwt.verify(token, config.jwt.accessTokenSecret!);
+//   const decode = jwt.verify(token, config.jwt.accessTokenSecret!)as number ;
+// const userId= decode.id as number
+//   req.user = decode;
+//   console.log("dec",decode)
+//   req.userId = decode.id as number
 
-  req.user = decode;
+  const user = jwt.verify(token, config.jwt.accessTokenSecret!) as {
+    id: number;
+  };
+  console.log(user);
 
+  req.created_by = user.id as number;
+  console.log(req.created_by)
   next();
 };

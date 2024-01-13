@@ -31,6 +31,7 @@ export const register = async (
 
 export const login = async (email: string, password: string) => {
   const user = await UserModel.getByEmail(email);
+
   const userDetail = {
     fullname: user.fullname,
   };
@@ -39,7 +40,7 @@ export const login = async (email: string, password: string) => {
 
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) return null;
-
+console.log("user",user)
   const accessToken = jwt.sign(user, config.jwt.accessTokenSecret!, {
     expiresIn: ACCESS_TOKEN_EXPIRY,
   });

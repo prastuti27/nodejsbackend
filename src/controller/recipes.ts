@@ -7,7 +7,12 @@ import {
   deleteRecipe,
   getAllRecipes,
 } from "../services/recipesCrud";
+import { cloudinaryUpload } from "../utils/cloudinary";
+import { createRecipePayloadInterface } from "../interface/recipe";
 
+// interface ExtendedRequest extends Request {
+//   user_id: number;
+// }
 // Get All Recipes Controller
 export const getAllRecipesController = async (
   req: Request,
@@ -22,16 +27,32 @@ export const getAllRecipesController = async (
   }
 };
 
+interface ExtendedRequest extends Request{
+  
+    created_by:number;
+    // firstname:string;
+  }
+
 // Create Recipe Controller
 export const createRecipeController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const extendedRequest = req as ExtendedRequest
   try {
-    const { categories, ...recipeDetails } = req.body;
+    const { categories,created_by,...recipeDetails } = extendedRequest.body;
+console.log({recipeDetails})
 
-    const recipeId = await createRecipe(recipeDetails, categories);
+const data :createRecipePayloadInterface={
+...recipeDetails,created_by:extendedRequest.created_by
+}
+
+console.log("hey",data)
+// const {id}= extendedRequest.user 
+// recipeDetails.created_by= id
+recipeDetails.photo=await cloudinaryUpload(recipeDetails.photo)
+    const recipeId = await createRecipe(data,categories);
     res.status(201).json({ recipeId });
   } catch (error) {
     next(error);

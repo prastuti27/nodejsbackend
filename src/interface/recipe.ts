@@ -4,7 +4,7 @@ export interface createRecipePayloadInterface {
   ingredients: { name: string; quantity: number }[];
   instructions: string[];
   photo: string;
-  createdBy: number;
+  created_by?: number;
 }
 
 export interface updateRecipePayloadInterface {

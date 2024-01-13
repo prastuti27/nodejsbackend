@@ -29,6 +29,7 @@ export default class RecipeModel extends BaseModel {
         ingredients: "ingredients",
         instructions: "instructions",
         photo: "photo",
+        createdy:"created_by",
         createdAt: "created_at",
       })
       .table("recipes");
@@ -43,6 +44,7 @@ export default class RecipeModel extends BaseModel {
         ingredients: "ingredients",
         instructions: "instructions",
         createdAt: "createdAt",
+        createdBy: "createdBy"
       })
       .table("recipes")
       .where({ id })

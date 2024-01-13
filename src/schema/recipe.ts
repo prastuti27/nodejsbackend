@@ -16,9 +16,9 @@ const createRecipeSchema = Joi.object({
   instructions: Joi.string().required().messages({
     "required.any": "Instructions are required",
   }),
-  photo: Joi.string().required().messages({
-    "required.any": "Photos are required",
-  }),
+  // photo: Joi.string().required().messages({
+  //   "required.any": "Photos are required",
+  // }),
 });
 
 const updateRecipeSchema = Joi.object({

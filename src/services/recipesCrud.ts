@@ -23,16 +23,23 @@ export const createRecipe = async (
   data: createRecipePayloadInterface,
   categories: string[]
 ) => {
+  console.log({data})
+  console.log({categories})
   const recipeData = {
     ...data,
     ingredients: JSON.stringify(data.ingredients),
   };
+  console.log("recipedata",recipeData)
+  
   const recipeId = await RecipeModel.create(recipeData);
-  categories.forEach(async (category) => {
-    const categoryId = await categoryModel.getCategoryIdByName(category);
-    console.log(categoryId);
-    // await RecipeCategoryModel.insert({recipeId, category.id})
-  });
+  if( categories.length>0){
+    categories.forEach(async (category) => {
+      const categoryId = await categoryModel.getCategoryIdByName(category);
+      console.log(categoryId);
+      // await RecipeCategoryModel.insert({recipeId, category.id})
+    });
+  }
+ 
 };
 
 export const updateRecipe = async (
