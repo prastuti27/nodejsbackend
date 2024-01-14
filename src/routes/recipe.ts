@@ -14,7 +14,7 @@ const router = Router();
 
 router.post("/recipes",authMiddleware,createRecipeController);
 router.get("/recipes/:recipeId", getRecipeByIdController);
-router.get("/recipes", authMiddleware,getAllRecipesController);
+router.get("/recipes",getAllRecipesController);
 router.put("/recipes/:recipeId", updateRecipeController);
 router.delete("/recipes/:recipeId", deleteRecipeController);
 router.use(genericErrorHandler );

@@ -16,29 +16,42 @@ export const getRecipeById = async (id: number) => {
   const categories = await RecipeCategoryModel.getAll(id);
   // console.log(categories);
 
-  return data;
+
+  const response = {...data, categories}
+
+  return response;
 };
 
 export const createRecipe = async (
   data: createRecipePayloadInterface,
   categories: string[]
 ) => {
-  console.log({data})
-  console.log({categories})
   const recipeData = {
     ...data,
     ingredients: JSON.stringify(data.ingredients),
   };
-  console.log("recipedata",recipeData)
   
-  const recipeId = await RecipeModel.create(recipeData);
-  if( categories.length>0){
-    categories.forEach(async (category) => {
-      const categoryId = await categoryModel.getCategoryIdByName(category);
-      console.log(categoryId);
-      // await RecipeCategoryModel.insert({recipeId, category.id})
-    });
+  const recipeId:any = await RecipeModel.create(recipeData);
+
+if (categories.length > 0) {
+  for (const category of categories) {
+    const categoryIdArray: any = await categoryModel.create(category);
+
+    if (categoryIdArray.length > 0) {
+      const categoryId = categoryIdArray[0].id;
+
+      console.log('category', recipeId);
+
+      // Now you can use categoryId directly without accessing any 'id' property.
+      const da = await RecipeCategoryModel.create({ recipe_id: recipeId[0].id, category_id: categoryId });
+
+      console.log('da', da)
+    } else {
+      console.error('No category ID returned from categoryModel.create');
+    }
   }
+}
+
  
 };
 

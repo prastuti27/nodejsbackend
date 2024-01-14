@@ -12,6 +12,8 @@ export default class RecipeCategoryModel extends BaseModel {
   }
 
   static async create(recipe_category: any) {
+
+    console.log({recipe_category})
     return this.queryBuilder()
       .returning("id")
       .insert(recipe_category)

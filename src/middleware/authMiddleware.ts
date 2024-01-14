@@ -8,7 +8,15 @@ export const authMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.headers.authorization?.split(" ")[1] as string;
+
+  const authHeader = req.headers['authorization'];
+
+  if(!authHeader) {
+    return res.status(401).json({message: 'Unauthenticated'})
+  }
+
+
+  const token = authHeader.split(" ")[1] as string;
 
   if (!token) {
     res.status(401).json({ message: "Token not Found" });
@@ -24,7 +32,7 @@ export const authMiddleware = async (
     id: number;
   };
   console.log(user);
-
+req.user = user
   req.created_by = user.id as number;
   console.log(req.created_by)
   next();

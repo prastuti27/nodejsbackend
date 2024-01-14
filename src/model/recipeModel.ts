@@ -22,30 +22,14 @@ import BaseModel from "./baseModel";
 export default class RecipeModel extends BaseModel {
   static async getAll() {
     return this.queryBuilder()
-      .select({
-        id: "id",
-        title: "title",
-        description: "description",
-        ingredients: "ingredients",
-        instructions: "instructions",
-        photo: "photo",
-        createdy:"created_by",
-        createdAt: "created_at",
-      })
-      .table("recipes");
+    .select('recipes.*', 'users.firstname as firstname', 'users.lastname as lastname') // Adjust the columns as needed
+    .from('recipes')
+    .leftJoin('users', 'recipes.createdBy', 'users.id');
   }
 
   static async getById(id: number) {
     return this.queryBuilder()
-      .select({
-        id: "id",
-        title: "title",
-        description: "description",
-        ingredients: "ingredients",
-        instructions: "instructions",
-        createdAt: "createdAt",
-        createdBy: "createdBy"
-      })
+      .select('*')
       .table("recipes")
       .where({ id })
       .first();

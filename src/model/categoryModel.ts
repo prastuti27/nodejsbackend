@@ -23,7 +23,7 @@ export default class categoryModel extends BaseModel {
   static async create(category: any) {
     return this.queryBuilder()
       .returning("id")
-      .insert(category)
+      .insert({name: category})
       .table("categories");
   }
 }

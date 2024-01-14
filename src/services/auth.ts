@@ -30,20 +30,23 @@ export const register = async (
 };
 
 export const login = async (email: string, password: string) => {
+  console.log(email)
   const user = await UserModel.getByEmail(email);
+console.log(user)
 
+if (!user) return null;
   const userDetail = {
     fullname: user.fullname,
   };
 
-  if (!user) return null;
+
 
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) return null;
-console.log("user",user)
-  const accessToken = jwt.sign(user, config.jwt.accessTokenSecret!, {
-    expiresIn: ACCESS_TOKEN_EXPIRY,
-  });
+  console.log("user", user);
+  const accessToken = jwt.sign(user, config.jwt.accessTokenSecret!
+    // expiresIn: ACCESS_TOKEN_EXPIRY,
+  );
 
   const refreshToken = jwt.sign(user, config.jwt.refreshTokenSecret!, {
     expiresIn: REFRESH_TOKEN_EXPIRY,

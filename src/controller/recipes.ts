@@ -48,11 +48,11 @@ const data :createRecipePayloadInterface={
 ...recipeDetails,created_by:extendedRequest.created_by
 }
 
-console.log("hey",data)
 // const {id}= extendedRequest.user 
 // recipeDetails.created_by= id
 recipeDetails.photo=await cloudinaryUpload(recipeDetails.photo)
-    const recipeId = await createRecipe(data,categories);
+console.log(recipeDetails)
+    const recipeId = await createRecipe({...recipeDetails, created_by: extendedRequest.created_by},categories);
     res.status(201).json({ recipeId });
   } catch (error) {
     next(error);
