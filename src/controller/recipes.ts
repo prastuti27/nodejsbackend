@@ -6,9 +6,11 @@ import {
   updateRecipe,
   deleteRecipe,
   getAllRecipes,
+  getRecipesByUserId,
 } from "../services/recipesCrud";
 import { cloudinaryUpload } from "../utils/cloudinary";
 import { createRecipePayloadInterface } from "../interface/recipe";
+import NotFoundError from "../error/notFoundError";
 
 // interface ExtendedRequest extends Request {
 //   user_id: number;
@@ -112,5 +114,24 @@ export const deleteRecipeController = async (
     res
       .status(404)
       .json({ message: "Recipe not found or could not be deleted" });
+  }
+};
+export const getRecipesByUserController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = parseInt(req.params.userId, 10);
+
+    const recipes = await getRecipesByUserId(userId);
+
+    if (recipes.data.length > 0) {
+      res.json(recipes);
+    } else {
+      throw new NotFoundError(`Recipes for user with id: ${userId} not found`);
+    }
+  } catch (error) {
+    next(error);
   }
 };

@@ -42,7 +42,7 @@ if (categories.length > 0) {
 
       console.log('category', recipeId);
 
-      // Now you can use categoryId directly without accessing any 'id' property.
+    
       const da = await RecipeCategoryModel.create({ recipe_id: recipeId[0].id, category_id: categoryId });
 
       console.log('da', da)
@@ -88,3 +88,15 @@ export const getAllRecipes = async () => {
     data: recipes,
   };
 };
+export const getRecipesByUserId = async (userId: number) => {
+  const recipes = await RecipeModel.getByUserId(userId);
+
+  if (!recipes || recipes.length === 0) {
+    throw new NotFoundError(`Recipes for user with id: ${userId} not found`);
+  }
+
+  return {
+    data: recipes,
+  };
+};
+

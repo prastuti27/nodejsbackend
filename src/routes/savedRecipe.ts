@@ -3,7 +3,7 @@ import {
   getAllSavedRecipesController,
   saveRecipeController,
   unsaveRecipeController,
-} from "../controller/saveRecipe"; // Assuming the controller file for saved recipes is savedRecipes.ts
+} from "../controller/saveRecipe"; 
 import { genericErrorHandler } from "../middleware/errorHandler";
 import { authMiddleware } from "../middleware/authMiddleware";
 

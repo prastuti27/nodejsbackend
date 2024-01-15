@@ -7,7 +7,7 @@ import {
 } from "../services/likeservice";
 
 interface AuthenticatedRequest extends Request {
-  user?: { id: number /* other user properties */ };
+  user?: { id: number  };
 }
 
 // Get All Likes for Recipe Controller

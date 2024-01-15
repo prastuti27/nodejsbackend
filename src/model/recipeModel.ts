@@ -1,20 +1,4 @@
-// export interface Recipe {
-//     id: number;
-//     title: string;
-//     photo: string;
-//     description:string;
-//     ingredients: Ingredient[];
-//     steps: string[];
-//     created_at: Date;
-//     updated_at?: Date;
-//   }
 
-//   export interface Ingredient {
-//     name: string;
-//     quantity: string;
-//   }
-
-// recipeModel.ts
 
 import { updateRecipePayloadInterface } from "../interface/recipe";
 import BaseModel from "./baseModel";
@@ -22,7 +6,7 @@ import BaseModel from "./baseModel";
 export default class RecipeModel extends BaseModel {
   static async getAll() {
     return this.queryBuilder()
-    .select('recipes.*', 'users.firstname as firstname', 'users.lastname as lastname') // Adjust the columns as needed
+    .select('recipes.*', 'users.firstname as firstname', 'users.lastname as lastname') 
     .from('recipes')
     .leftJoin('users', 'recipes.createdBy', 'users.id');
   }
@@ -33,6 +17,12 @@ export default class RecipeModel extends BaseModel {
       .table("recipes")
       .where({ id })
       .first();
+  }
+  static async getByUserId(userId: number) {
+    return this.queryBuilder()
+      .select('*')
+      .from('recipes')
+      .where({ createdBy: userId });
   }
 
   static async create(recipe: any) {
